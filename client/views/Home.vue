@@ -3,9 +3,7 @@
     <top-nav></top-nav>
     <section class="section">
     <div class="container">
-        <template v-for="q in queues">
-        <ticket-list :queue=q></ticket-list>
-        </template>
+        <ticket-list v-for="category in categories" :category="category" v-if="categories.length"></ticket-list>
     </div>
   </section>
 </div>
@@ -14,15 +12,22 @@
 <script>
 import TicketList from 'components/TicketList'
 import TopNav from 'components/TopNav'
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 
 export default {
-  computed: mapGetters({
-    queues: 'queues'
-  }),
+  computed: {
+    ...mapState({
+    config: 'config',
+    }),
+    ...mapState('tickets',
+     ['categories']),
+  },
   components: {
     TicketList,
     TopNav
-  }
+  },
+  created () {
+    this.$store.dispatch('tickets/initCategories', this.config.queues)
+  },
 }
 </script>

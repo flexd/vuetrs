@@ -1,13 +1,13 @@
 <template>
     <div class="ticketview">
     <div class="heading">
-    <router-link :to="{name: 'queue', params: { name: queue}}"><h1 class="title">{{queue}} ({{openTickets(queue).length}})</h1></router-link>
+    <router-link :to="{name: 'queue', params: { name: category.categoryName}}"><h1 class="title">{{category.categoryName}} ({{openTickets(category).length}})</h1></router-link>
     </div>
     {{selectedTickets}}
-    <ticket-table :tickets=openTickets(queue)></ticket-table>
-    <template v-if="pendingTickets(queue).length > 0">
+    <ticket-table :tickets=openTickets(category)></ticket-table>
+    <template v-if="pendingTickets(category).length > 0">
     Pending
-    <ticket-table :tickets=pendingTickets(queue)></ticket-table>
+    <ticket-table :tickets=pendingTickets(category)></ticket-table>
     </template>
 </div>
 </div>
@@ -17,17 +17,17 @@
 import { mapGetters, mapActions } from 'vuex'
 import TicketTable from 'components/TicketTable'
 export default {
-  props: ['queue'],
+  props: ['category'],
   computed: {...mapGetters({
-    tickets: 'allTickets',
-    pendingTickets: 'pendingTickets',
-    openTickets: 'openTickets',
-    selectedTickets: 'selectedTickets'
+    tickets: 'tickets/allTickets',
+    pendingTickets: 'tickets/pendingTickets',
+    openTickets: 'tickets/openTickets',
+    selectedTickets: 'tickets/selectedTickets'
   })},
   methods: mapActions([
   ]),
   created () {
-    this.$store.dispatch('getAllTickets', this.queue)
+    this.$store.dispatch('tickets/getAllTickets', this.category)
   },
   components: {
     TicketTable
