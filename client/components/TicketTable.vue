@@ -2,7 +2,7 @@
 <div>
     <table class="table is-bordered">
         <thead>
-            <th><input type="checkbox"/></th>
+            <th><input @change="toggleCategoryChecked(category)" type="checkbox"/></th>
             <th>Pri</th>
             <th>Created</th>
             <th>Updated</th>
@@ -13,11 +13,10 @@
             <th>Title</th>
             <th>Owner</th>
             <th>Responsible</th>
-<th colspan=4></th>
         </thead>
         <tbody>
             <tr v-for="t in tickets">
-              <td><input :checked="t.checked" @change="toggleTicketChecked(t)" :id="t.tn" :value="t.tn" type="checkbox"/></td>
+              <td><input :checked="t.checked" @change="toggleTicketChecked({category: category, ticket: t})" :id="t.tn" :value="t.tn" type="checkbox"/></td>
               <td>{{ t.priority }}</td>
               <td>{{ t.created }}</td>
               <td>{{ t.updated }}</td>
@@ -28,33 +27,22 @@
               <td>{{ t.title }}</td>
               <td>{{ t.owner }}</td>
               <td>{{ t.responsible }}</td>
-              <td class="button action-button is-danger">X</td>
-              <td class="button action-button is-info">N</td>
             </tr>
         </tbody>
     </table>
     </div>
 </template>
-<style>
-.action-button {
-    border:0;
-    display:none;
-}
-tr:hover .action-button {
-    display:table-cell;
-}
-</style>
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-    props: ['tickets'],
+    props: ['category', 'tickets'],
     computed: mapGetters({
-      selectedTickets: 'selectedTickets',
+      selectedTickets: 'tickets/selectedTickets',
     }),
     methods: {
         ...mapActions({
-            toggleTicketChecked: 'toggleTicketChecked',
-            toggleQueueChecked: 'toggleQueueChecked'
+            toggleTicketChecked: 'tickets/toggleTicketChecked',
+            toggleCategoryChecked: 'tickets/toggleCategoryChecked'
         }),
         //selectAllTickets: function (event) {
             //var allTickets = this.tickets.map(function (val) {

@@ -11,17 +11,19 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Home
+      component: Home,
+      children: [
+        {
+        path: '/q/:name',
+        component: Queue,
+        name: 'queue'
+        },
+        {
+        path: '/t/:tn',
+        component: Ticket,
+        name: 'ticket'
+        }
+      ]
     },
-    {
-    path: '/q/:name',
-    component: Queue,
-    name: 'queue'
-    },
-    {
-    path: '/t/:tn',
-    component: Ticket,
-    name: 'ticket'
-    }
   ]
 })

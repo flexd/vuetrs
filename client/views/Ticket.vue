@@ -50,12 +50,12 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {...mapGetters({
-    ticket: 'currentTicket',
+    ticket: 'tickets/currentTicket',
   })},
   methods: mapActions([
   ]),
   created () {
-    this.$store.dispatch('getTicketByTn', this.$route.params.tn)
+    this.$store.dispatch('tickets/getTicketByTn', this.$route.params.tn)
   },
   components: {
     TopNav

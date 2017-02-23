@@ -1,12 +1,5 @@
 <template>
-<div>
-    <top-nav></top-nav>
-    <section class="section">
-    <div class="container">
-        <ticket-list :queue=$route.params.name></ticket-list>
-    </div>
-  </section>
-</div>
+<ticket-list :category=$route.params.name></ticket-list>
 </template>
 
 <script>
